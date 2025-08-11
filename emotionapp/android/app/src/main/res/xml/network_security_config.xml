@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Allow cleartext traffic (HTTP) for specific domains -->
+    <domain-config cleartextTrafficPermitted="true">
+        <!-- Replace 192.168.29.211 with your IP address or domain -->
+        <domain includeSubdomains="true"> 192.168.0.106
+        </domain>
+    </domain-config>
+</network-security-config>
+    
