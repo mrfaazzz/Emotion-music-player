@@ -1,0 +1,143 @@
+{% extends 'ADMIN/indexsong.html' %}
+
+{% block head %}
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block body %}
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a; /* Pure black background */
+            margin: 0;
+            padding: 0;
+            color: #e0e0e0; /* Light gray text for contrast */
+        }
+
+        /* Feedback Section (Form Container) */
+        .feedback-section {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #141414; /* Near-black container */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.7); /* Green glow for form outline */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #00e676; /* Bright green accent */
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Back to collapse for clean borders */
+            table-layout: fixed;
+            background: #1c1c1c; /* Slightly lighter black for table */
+            border-radius: 8px; /* Retain rounded corners */
+            overflow: hidden; /* Ensure content stays within bounds */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #2a2a2a; /* Dark gray border */
+            transition: box-shadow 0.3s ease; /* Smooth transition for glow */
+        }
+
+        th {
+            background-color: #00c853; /* Darker green for header */
+            color: #ffffff;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: #c0c0c0; /* Softer gray text */
+        }
+
+        /* Row Glow Effect */
+        tbody tr {
+            transition: box-shadow 0.3s ease; /* Smooth transition for row glow */
+        }
+
+        tbody tr:hover {
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.6); /* Green glow on row hover */
+        }
+
+        /* Remove border from last row for cleaner look */
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Reply Button */
+        .reply-btn {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 6px 12px;
+            background-color: #00e676; /* Bright green button */
+            border-radius: 4px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        /* Button Hover Effect */
+        .reply-btn:hover {
+            background-color: #00c853; /* Darker green on hover */
+            transform: translateY(-2px); /* Slight lift */
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.6); /* Glow on button hover */
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .feedback-section {
+                margin: 15px;
+                padding: 15px;
+            }
+            th, td {
+                padding: 10px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <!-- Feedback Section -->
+    <div class="feedback-section" id="feedbackContainer">
+        <h2>User Complaints</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Complaint</th>
+                    <th>Reply</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{ i.date }}</td>
+                    <td>{{ i.USER.name }}</td>
+                    <td>{{ i.content }}</td>
+                    <td>
+                        <a href="/replay/{{ i.id }}#a" class="reply-btn">
+                            Reply
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

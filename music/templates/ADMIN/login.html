@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spotify - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Montserrat", sans-serif;
+      margin: 0;
+      background: radial-gradient(circle at 50% 50%, #1DB954 0%, #121212 70%);
+      background-size: 150% 150%;
+      animation: circleAnimation 6s ease-in-out infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @keyframes circleAnimation {
+      0% { background-position: 0% 0%; }
+      25% { background-position: 100% 0%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+      100% { background-position: 0% 0%; }
+    }
+
+    .login-container {
+      width: 450px;
+      padding: 50px;
+      background: rgba(18, 18, 18, 0.95);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(40, 40, 40, 0.3);
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      width: 100%;
+      position: relative;
+    }
+
+    .top, .bottom {
+      height: 15px;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    h2 {
+      color: #ffffff;
+      margin: 0 0 30px 0;
+      font-weight: 700;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+      background: rgba(40, 40, 40, 0.8);
+      color: #ffffff;
+      border: 1px solid rgba(60, 60, 60, 0.5);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1DB954;
+      background: rgba(50, 50, 50, 0.9);
+      box-shadow: 0 0 12px rgba(29, 185, 84, 0.3);
+    }
+
+    input::placeholder {
+      color: rgba(150, 150, 150, 0.7);
+      font-style: normal;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 18px;
+      background: #1DB954;
+      color: #121212;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 0 4px 15px rgba(29, 185, 84, 0.3);
+    }
+
+    input[type="submit"]:hover {
+      background: #1ed760;
+      transform: scale(1.02);
+      box-shadow: 0 6px 20px rgba(29, 185, 84, 0.5);
+    }
+
+    .error-message {
+      color: #ff4757;
+      margin-top: 20px;
+      font-size: 0.95rem;
+      text-align: center;
+      display: none;
+      font-weight: 500;
+    }
+
+    .success-message {
+      color: #1DB954;
+      margin-top: 20px;
+      font-size: 0.95rem;
+      text-align: center;
+      display: none;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <form method="post" action="/login_post">
+      {% csrf_token %}
+      <div class="container">
+        <div class="top"></div>
+        <div class="bottom"></div>
+        <div class="center">
+          <h2>Sign In</h2>
+          <input type="text" placeholder="username" name="kkk"/>
+          <input type="text" placeholder="password" name="mmm"/>
+          <input type="submit" name="Login" value="Login"/>
+          <h2> </h2>
+        </div>
+      </div>
+    </form>
+
+    <div class="error-message" id="errorMessage"></div>
+    <div class="success-message" id="successMessage"></div>
+  </div>
+
+  <script>
+    // Function to handle form submission
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const form = document.querySelector('form');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      // Reset messages
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      // Submit form via fetch
+      fetch('/login_post', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: {
+          'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+      })
+      .then(response => response.text())
+      .then(data => {
+        // Parse the Django HttpResponse script
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data, 'text/html');
+        const script = doc.querySelector('script').textContent;
+
+        // Execute the script (alert and redirect)
+        eval(script);
+      })
+      .catch(error => {
+        errorMessage.textContent = 'An error occurred. Please try again.';
+        errorMessage.style.display = 'block';
+        console.error('Error:', error);
+      });
+    }
+
+    // Add event listener
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelector('form').addEventListener('submit', handleLogin);
+    });
+  </script>
+</body>
+</html>

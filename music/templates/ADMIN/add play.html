@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Songs to Playlist</title>
+    <style>
+        /* Center the entire form on the page */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0d1117;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #1c1c1c; /* Darker button background */
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #1cad2e;
+            box-shadow: 0 0 15px rgba(28, 173, 46, 0.6); /* Green glow on hover */
+        }
+
+        .back-btn svg path {
+            stroke: #ffffff;
+        }
+
+        /* Form container */
+        .form-container {
+            background-color: #161b22;
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(29, 185, 84, 0.3);
+            transition: all 0.3s ease-in-out;
+            margin: 40px 0;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 0 25px rgba(29, 185, 84, 0.6);
+        }
+
+        /* Heading */
+        h2 {
+            color: #1db954;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-spacing: 10px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center; /* Centering text inside the table */
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #ccc;
+            display: block;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        /* Input fields */
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #333;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #21262d;
+            color: #fff;
+            text-align: center;
+            transition: 0.3s ease-in-out;
+            outline: none;
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            border-color: #1db954;
+            box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
+        }
+
+        /* Submit Button */
+        input[type="submit"] {
+            background: linear-gradient(90deg, #1db954, #1ed760);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s ease-in-out;
+            margin-top: 20px;
+        }
+
+        input[type="submit"]:hover {
+            background: linear-gradient(90deg, #1ed760, #1aaf5e);
+            box-shadow: 0 0 15px rgba(29, 185, 84, 0.7);
+        }
+
+        /* Emotion filters */
+        .emotion-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .emotion-filter {
+            background-color: #21262d;
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: #ccc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .emotion-filter.active {
+            background-color: #1db954;
+            color: white;
+            border-color: #1db954;
+            box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
+        }
+
+        /* Songs list */
+        .songs-container {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 0 10px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            background-color: #21262d;
+        }
+
+        .song-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .song-item:last-child {
+            border-bottom: none;
+        }
+
+        .song-item label {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin: 0;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .song-item input[type="checkbox"] {
+            margin-right: 15px;
+        }
+
+        .song-info {
+            flex-grow: 1;
+        }
+
+        .song-name {
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .song-emotion {
+            color: #1db954;
+            font-size: 12px;
+        }
+
+        /* Badge for emotion */
+        .emotion-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 10px;
+            background-color: #333;
+        }
+
+        .emotion-badge.happy {
+            background-color: #1db954;
+            color: white;
+        }
+
+        .emotion-badge.sad {
+            background-color: #4f5bd5;
+            color: white;
+        }
+
+        .emotion-badge.angry {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .emotion-badge.neutral {
+            background-color: #f9a825;
+            color: black;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+    <button class="back-btn" onclick="history.back()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+    <div class="form-container" align="center">
+    <h2>Add Playlist</h2>
+    <form id="form1" name="form1" method="post" action="/add_playlist2_post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>
+                    <label for="pname">Playlist Name:</label>
+                    <input type="text" name="pname" id="pname" required placeholder="Enter playlist name">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Filter by Emotions:</label>
+                    <div class="emotion-filters">
+                        <div class="emotion-filter active" data-emotion="all">All</div>
+                        {% for emotion in emotions %}
+                            <div class="emotion-filter" data-emotion="{{ emotion }}">{{ emotion|title }}</div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Select Songs to Add:</label>
+                    <div class="songs-container">
+                        {% for song in songs %}
+                        <div class="song-item" data-emotion="{{ song.emotion }}">
+                            <label>
+                                <input type="checkbox" name="selected_songs" value="{{ song.id }}">
+                                <div class="song-info">
+                                    <div class="song-name">{{ song.sname }}</div>
+                                    <div class="song-emotion">
+                                        Duration: {{ song.duration }}
+                                        <span class="emotion-badge {{ song.emotion }}">{{ song.emotion|title }}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="submit" name="add" value="Add Songs to Playlist" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+{#
+<script>
+    // Function to filter songs by emotion
+    document.querySelectorAll('.emotion-filter').forEach(filter => {
+        filter.addEventListener('click', function() {
+            // Remove active class from all filters
+            document.querySelectorAll('.emotion-filter').forEach(f => {
+                f.classList.remove('active');
+            });
+
+            // Add active class to clicked filter
+            this.classList.add('active');
+
+            const selectedEmotion = this.getAttribute('data-emotion');
+
+            // Filter songs
+            document.querySelectorAll('.song-item').forEach(song => {
+                if (selectedEmotion === 'all') {
+                    song.style.display = 'flex';
+                } else if (song.getAttribute('data-emotion') === selectedEmotion) {
+                    song.style.display = 'flex';
+                } else {
+                    song.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Validate form before submission
+    document.getElementById('form1').addEventListener('submit', function(e) {
+        const playlistName = document.getElementById('pname').value;
+        const checkedSongs = document.querySelectorAll('input[name="selected_songs"]:checked');
+
+        if (playlistName === '') {
+            e.preventDefault();
+            alert('Please enter a playlist name!');
+        } else if (checkedSongs.length === 0) {
+            e.preventDefault();
+            alert('Please select at least one song to add to the playlist!');
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+{% extends 'ADMIN/indexsong.html' %}
+
+{% block head %}
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- FontAwesome for Icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block body %}
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0a0a0a; /* Pure black background */
+            margin: 0;
+            padding: 0;
+            color: #e0e0e0; /* Light gray text */
+        }
+
+        /* Feedback Section */
+        .feedback-section {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #141414; /* Near-black container */
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7); /* Deep shadow */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #00e676; /* Bright green accent */
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            background: #1c1c1c; /* Slightly lighter black */
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #2a2a2a; /* Dark gray border */
+        }
+
+        th {
+            background-color: #00c853; /* Darker green header */
+            color: #ffffff;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        td {
+            color: #c0c0c0; /* Softer gray text */
+        }
+
+        /* Glowing Effect */
+        .glow-effect {
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.7); /* Green glow */
+        }
+
+        /* Empty State Styling */
+        td[colspan="4"] {
+            text-align: center;
+            font-style: italic;
+            color: #666; /* Muted gray for empty state */
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .feedback-section {
+                margin: 15px;
+                padding: 15px;
+            }
+            th, td {
+                padding: 10px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <!-- Feedback Section -->
+    <div class="feedback-section glow-effect" id="feedbackContainer">
+        <h2>User Feedback</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Content</th>
+                    <th>Rating</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{ i.USER.name }}</td>
+                    <td>{{ i.content }}</td>
+                    <td>{{ i.rating }}</td>
+                    <td>{{ i.date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No feedback available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

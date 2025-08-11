@@ -1,0 +1,172 @@
+{% extends 'ADMIN/indexsong.html' %}
+{% block body %}
+<style>
+  /* Importing Google Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+  /* Dark Mode Global Styles */
+  body {
+    background-color: #121212;
+  }
+
+  /* Table Container */
+  table {
+    width: 85%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: #e0e0e0;
+    background: #1e1e1e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    border: 1px solid #333;
+  }
+
+  /* Header Styling */
+  thead tr {
+    background: linear-gradient(90deg, #2e7d32, #1b5e20);
+    color: #ecf0f1;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  thead th {
+    padding: 15px 20px;
+    border-bottom: 1px solid #444;
+  }
+
+  /* Table Body Styling */
+  tbody tr {
+    border-bottom: 1px solid #333;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #1c1c1c;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #222222;
+  }
+
+  tbody tr:hover {
+    background: #2c2c2c;
+    transform: scale(1.02);
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  }
+
+  tbody td {
+    padding: 15px 20px;
+    text-align: left;
+    color: #b0b0b0;
+  }
+
+  /* Profile Image Styling */
+  tbody td img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2e7d32;
+    transition: transform 0.3s ease;
+  }
+
+  tbody tr:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Table Borders */
+  th, td {
+    border-right: 1px solid #333;
+  }
+
+  th:last-child, td:last-child {
+    border-right: none;
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #202020;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #2e7d32;
+    border-radius: 6px;
+    border: 3px solid #202020;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #43a047;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    table {
+      width: 95%;
+      font-size: 0.85rem;
+    }
+
+    thead tr {
+      font-size: 0.9rem;
+    }
+
+    tbody td img {
+      height: 70px;
+      width: 70px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    table {
+      font-size: 0.8rem;
+    }
+
+    thead tr {
+      font-size: 0.85rem;
+    }
+
+    tbody td {
+      padding: 10px 15px;
+    }
+
+    tbody td img {
+      height: 50px;
+      width: 50px;
+    }
+  }
+</style>
+
+<body>
+  <form id="form1" name="form1" method="post" action="">
+    <table>
+      <thead>
+        <tr>
+          <th>Profile</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for i in data %}
+        <tr>
+          <td><img src="{{ i.image.url }}" height="100px" width="100px"></td>
+          <td>{{ i.name }}</td>
+          <td>{{ i.email }}</td>
+          <td>{{ i.phone }}</td>
+          <td>{{ i.place }}, {{ i.post }}, {{ i.pin }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+</body>
+{% endblock %}

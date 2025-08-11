@@ -1,0 +1,363 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMO - Emotion Music Player</title>
+    <style>
+        /* Previous styles remain the same until nav-menu */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: rgba(26, 26, 26, 0.9);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: #1DB954;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #1DB954;
+        }
+
+        .menu-trigger {
+            display: none;
+            color: #ffffff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu-trigger {
+                display: block;
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            background: linear-gradient(to bottom, #1a1a1a, #000000);
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #1DB954;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 40px;
+            color: #B3B3B3;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+            text-align: left;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-title {
+            color: #1DB954;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-text {
+            color: #B3B3B3;
+            font-size: 16px;
+        }
+
+        /* Modified CTA button styles */
+        .cta-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #1DB954;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 24px;
+        }
+
+        .cta-button:hover {
+            background: #1ed760;
+            transform: scale(1.1);
+        }
+
+        /* Redesigned Popup styles - Side panel */
+        .popup {
+            position: fixed;
+            top: 0;
+            right: -300px; /* Start off-screen */
+            width: 300px;
+            height: 100%;
+            background: #111111;
+            z-index: 200;
+            transition: right 0.3s ease-in-out;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .popup.active {
+            right: 0;
+        }
+
+        .popup-content {
+            padding: 40px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .popup-title {
+            color: #1DB954;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .close-popup {
+            cursor: pointer;
+            color: #B3B3B3;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        .close-popup:hover {
+            color: #ffffff;
+        }
+
+        .popup-menu {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+
+        .popup-menu-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            overflow: hidden;
+        }
+
+        .popup-menu-item a {
+            color: #ffffff;
+            text-decoration: none;
+            display: block;
+            padding: 15px;
+            transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 4px solid transparent;
+        }
+
+        .popup-menu-item a:hover {
+            background: rgba(29, 185, 84, 0.15);
+            border-left: 4px solid #1DB954;
+            padding-left: 20px;
+        }
+
+        /* Backdrop when popup is open */
+        .backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 199;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .backdrop.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">EMO</div>
+            <ul class="nav-menu">
+                <li><a href="view_user#a">Users</a></li>
+                <li><a href="playlist#a">Playlist</a></li>
+                <li><a href="song#a">Songs</a></li>
+                <li><a href="feedback#a">Feedback</a></li>
+                <li><a href="complaint#a">Complaints</a></li>
+                <li><a href="/">Logout</a></li>
+            </ul>
+            <a class='menu-trigger'>
+                <span>Menu</span>
+            </a>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title"> Emotion Music Player</h1>
+            <p class="hero-subtitle">Experience music that matches your mood</p>
+
+            <div class="features">
+                <div class="feature-card">
+                    <h3 class="feature-title">How It Works</h3>
+                    <p class="feature-text">EMO uses advanced facial recognition technology to detect your emotional state in real-time. Our AI analyzes your facial expressions and selects music that perfectly matches your current mood, creating a personalized listening experience.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3 class="feature-title">Smart Features</h3>
+                    <p class="feature-text">
+                        • Real-time emotion detection<br>
+                        • Personalized playlists<br>
+                        • Mood-based recommendations<br>
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <h3 class="feature-title">Supported Emotions</h3>
+                    <p class="feature-text">
+                        • Happy - Upbeat and energetic tracks<br>
+                        • Sad - Soothing and comforting music<br>
+                        • Angry - Calming and relaxing tunes<br>
+                        • Neutral - Balanced and ambient sounds<br>
+                        • Surprised - Dynamic and rhythmic beats
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Button -->
+    <a href="#" class="cta-button" id="cta-button">^</a>
+
+    <!-- Backdrop for popup -->
+    <div class="backdrop" id="backdrop"></div>
+
+    <!-- Redesigned Side Popup -->
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <div class="popup-header">
+                <h2 class="popup-title">Functions</h2>
+                <span class="close-popup" id="close-popup">×</span>
+            </div>
+            <ul class="popup-menu">
+                <li class="popup-menu-item"><a href="view_user#a">Users</a></li>
+                <li class="popup-menu-item"><a href="playlist#a">Playlist</a></li>
+                <li class="popup-menu-item"><a href="song#a">Songs</a></li>
+                <li class="popup-menu-item"><a href="feedback#a">Feedback</a></li>
+                <li class="popup-menu-item"><a href="feedback#a">Complaints</a></li>
+                <li class="popup-menu-item"><a href="/">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const ctaButton = document.getElementById('cta-button');
+        const popup = document.getElementById('popup');
+        const closePopup = document.getElementById('close-popup');
+        const backdrop = document.getElementById('backdrop');
+
+        ctaButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            popup.classList.add('active');
+            backdrop.classList.add('active');
+        });
+
+        closePopup.addEventListener('click', () => {
+            popup.classList.remove('active');
+            backdrop.classList.remove('active');
+        });
+
+        backdrop.addEventListener('click', () => {
+            popup.classList.remove('active');
+            backdrop.classList.remove('active');
+        });
+    </script>
+</body>
+</html>

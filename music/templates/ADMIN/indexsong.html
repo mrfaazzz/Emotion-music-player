@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melodi - Music Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --spotify-black: #121212;
+            --spotify-green: #1DB954;
+            --spotify-dark-gray: #282828;
+            --spotify-light-gray: #B3B3B3;
+            --spotify-white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: #121212;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #282828;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbar-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: #B3B3B3;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #1DB954;
+        }
+
+        .nav-links .logout-btn {
+            background-color: #1DB954;
+            color: #FFFFFF;
+            padding: 8px 20px;
+            border-radius: 20px;
+            transition: transform 0.2s;
+        }
+
+        .nav-links .logout-btn:hover {
+            transform: scale(1.05);
+            color: #FFFFFF;
+            background-color: #1ed760;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            padding: 40px 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Cards and Sections */
+        .card {
+            background-color: #282828;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .card:hover {
+            background-color: #333333;
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #1DB954;
+            color: #FFFFFF;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #1ed760;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar {
+                padding: 10px 0;
+            }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1DB954;
+            color: #FFFFFF;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            opacity: 0.8;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            opacity: 1;
+            background-color: #1ed760;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main Navigation -->
+    <nav class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="/admin_view" class="navbar-brand">
+                <img src="static/adminnew/assets/images/logo.png" alt=" Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/view_user#a">Users</a></li>
+                <li><a href="/playlist#a">Playlist</a></li>
+                <li><a href="/song#a">Songs</a></li>
+                <li><a href="/feedback#a">Feedback</a></li>
+                <li><a href="/complaint#a">Complaints</a></li>
+                <li><a href="/" class="logout-btn">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+        <div class="container">
+            {% block body %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+{#    <a href="#" class="back-to-top">#}
+{#        <i class="fas fa-chevron-up"></i>#}
+{#    </a>#}
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Show/hide back to top button
+        window.onscroll = function() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.querySelector('.back-to-top').style.display = "flex";
+            } else {
+                document.querySelector('.back-to-top').style.display = "none";
+            }
+        };
+    </script>
+</body>
+</html>

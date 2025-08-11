@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REPLY</title>
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: "Poppins", sans-serif; /* Using Poppins for consistency */
+            background: #0a0a0a; /* Pure black background */
+            margin: 0;
+            padding: 0;
+            color: #e0e0e0; /* Light gray text */
+        }
+
+        /* Back Button */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #1c1c1c; /* Darker button background */
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #9c170c;
+            box-shadow: 0 0 15px rgba(194, 23, 12, 0.6); /* Green glow on hover */
+        }
+
+        .back-btn svg path {
+            stroke: #ffffff;
+        }
+
+        /* Form Styling */
+        form {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #141414; /* Near-black container */
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(194, 23, 12, 0.7); /* Persistent green glow */
+        }
+
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        tr {
+            border-bottom: 1px solid #2a2a2a; /* Dark gray separator */
+        }
+
+        tr:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            padding: 15px;
+            vertical-align: middle;
+            color: #c0c0c0; /* Softer gray text */
+        }
+
+        td:first-child {
+            font-weight: 600;
+            color: #ffffff; /* White for labels */
+        }
+
+        /* Input Fields */
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1c1c1c; /* Dark input background */
+            color: #e0e0e0;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(0, 230, 118, 0.8); /* Green glow on focus */
+        }
+
+        input[readonly] {
+            background-color: #2a2a2a; /* Slightly lighter for readonly */
+            color: #b0b0b0; /* Muted text for readonly */
+        }
+
+        /* Submit Button */
+        input[type="submit"] {
+            background-color: #9c170c; /* Bright green */
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(194, 23, 12, 0.9);
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            display: block;
+            margin: 20px auto 0;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #1cad2e; /* Darker green */
+            box-shadow: 0 0 15px rgba(28, 173, 46, 0.9); /* Stronger glow on hover */
+            transform: translateY(-2px); /* Slight lift */
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            form {
+                margin: 20px;
+                padding: 15px;
+            }
+            td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    <form id="form1" name="form1" method="post" action="/complaint_reply_post">
+        <table>
+            <tr>
+                <td>Complaint:</td>
+                <td><input type="text" readonly value="{{ data.content }}"></td>
+            </tr>
+            <tr>
+                <td>Reply:</td>
+                <td><input type="text" name="textfield"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" name="Submit" value="Submit">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

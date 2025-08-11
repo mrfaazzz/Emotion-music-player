@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Song</title>
+</head>
+<body>
+    <button class="back-btn" onclick="history.back()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    <div class="form-container">
+        <form method="post" action="/editsong_post" enctype="multipart/form-data">
+            <h2>Edit Song</h2>
+            <div class="form-group">
+                <label>Song Name</label>
+                <input type="text" value="{{ data.sname }}" name="textfield" required />
+            </div>
+            <div class="form-group">
+                <label>Duration</label>
+                <input type="text" value="{{ data.duration }}" name="textfield2" required />
+            </div>
+            <div class="form-group">
+                <label>Previous Image</label>
+                <img src="{{ data.simage.url }}" alt="Song Image" class="image-preview" />
+            </div>
+            <div class="form-group">
+                <label>Upload New Image</label>
+                <input type="file" name="simage" accept="image/*" />
+            </div>
+            <button type="submit" class="btn-submit">Update Song</button>
+        </form>
+    </div>
+
+    <style>
+        body {
+            background: #181818;
+            margin: 20px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+        }
+
+        .back-btn {
+            background: #282828;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #404040;
+        }
+
+        .form-container {
+            background: #212121;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            margin: 0 0 20px;
+            font-size: 24px;
+            color: #1db954;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b3b3b3;
+            font-size: 14px;
+        }
+
+        input[type="text"],
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background: #282828;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        input[type="text"]:hover,
+        input[type="file"]:hover {
+            background: #333;
+        }
+
+        input[type="text"]:focus,
+        input[type="file"]:focus {
+            background: #404040;
+            outline: none;
+        }
+
+        .image-preview {
+            max-width: 180px;
+            border-radius: 5px;
+            display: block;
+            margin: 10px auto;
+            transition: transform 0.2s;
+        }
+
+        .image-preview:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background: #1db954;
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #1ed760;
+            transform: scale(1.02);
+        }
+    </style>
+</body>
+</html>

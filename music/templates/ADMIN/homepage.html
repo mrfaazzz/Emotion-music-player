@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMO - Emotion Music Player</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff3399 0%, #6633ff 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            width: 60px;
+            height: 50px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .user-profile {
+            width: 35px;
+            height: 35px;
+            background: #444;
+            border-radius: 50%;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .headphone {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .headphone:nth-child(1) {
+            right: 15%;
+            top: 20%;
+        }
+
+        .headphone:nth-child(2) {
+            left: 15%;
+            bottom: 20%;
+        }
+
+        .brand {
+            text-align: center;
+            color: white;
+            z-index: 1;
+        }
+
+        .brand h1 {
+            font-size: 5rem;
+            letter-spacing: 0.5rem;
+        }
+
+        .brand p {
+            font-size: 1.2rem;
+            letter-spacing: 0.2rem;
+            margin-top: 1rem;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <img src="static/adminnew/assets/images/logo.png" alt="EMO Logo">
+        </div>
+        <div class="nav-links">
+            <a href="view_user#a">Users</a>
+            <a href="playlist#a">Playlist</a>
+            <a href="song#a">Songs</a>
+            <a href="feedback#a">Feedback</a>
+            <a href="complaint#a">Complaints</a>
+            <a href="/">Logout</a>
+        </div>
+        <div class="user-profile"></div>
+    </nav>
+
+    <main class="hero">
+{#        <img src="static/adminnew/assets/images/head.png" alt="Headphone" class="headphone">#}
+{#        <img src="static/adminnew/assets/images/spotify-covers-m.jpg" alt="Headphone" class="headphone">#}
+        <div class="brand">
+            <h1>EMO</h1>
+            <p>EMOTION MUSIC PLAYER</p>
+        </div>
+
+    </main>
+</body>
+</html>
